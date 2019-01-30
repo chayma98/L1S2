@@ -58,12 +58,15 @@ def remplirTabNorme (nb : int , tab : TabReels , tabNorme : TabReels):# tab norm
 def trouverCompromis (nb: int , tabPrixNote : MatReels ):
     remplirTabNorme(nb,tabPrixNote[0] , tabNormNote )
     remplirTabNorme(nb, tabPrixNote[1] , tabNormPrix  )
-def tabMixte (nb : int, tabNormNote: tabReels ,tabNormPrix : tabReel , tabMixte : tabReel):
+    
+def tabMixte (nb : int, tabNormNote: TabReels ,tabNormPrix : TabReels , tabMixte : TabReels):
     for i in nb :
         tabMixte[i]= (tabNormNote[i]*(1-tabNormPrix[i]*0,9))
+        
 def affichegeInteret (nb : int , tabMixte : TabReels):
-    print ( maxTab(nb , tabMixte)
-def moyenne ( nb: int , tab : TabReels):
+    print (maxTab(nb , tabMixte))
+    
+def moyennei ( nb: int, tab : TabReels):
     i = 1
     s = 0
     m = 0
@@ -81,4 +84,5 @@ def testTP1():
     trouver_compromis(nb, prixNotes)
     print("Moyenne des prix : " + str(moyenne(nb, prix)))
     print("Moyenne des notes : " + str(moyenne(nb, notes)))
-    
+
+testTP1()
