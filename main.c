@@ -1,62 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-void saisitab (int maxi, int TPolynome[]){
-int i =0 ;
-int c =0;
-for (i=0 ; i<= maxi ; i++) {
-    printf("donner le coefiicient de la puissance %d ",i);
-    scanf("%d",&c);
-        TPolynome[i]= c ;
-}}
-void affichageTab (int maxi , int TPolynome[]){
+void saisie(int matrice[][]){
+    int nbLigne = 0 ;
+    int nbColonnes = 0 ;
     int i = 0 ;
-    for (i=0;i<=maxi ; i++){
-           printf("\n %d\n",TPolynome[i]);
+    int j = 0 ;
+    int c = 0 ;
+printf("donner le nbre des ligne %d et le nbre de colonnes %d", nbLigne ,nbColonnes);
+scanf("%d %d",&nbLigne,&nbColonnes);
+// la premiere dimension correspond au lignes et la deuxieme au colonne
+for (i=1 ; i<= nbLigne ; i++){
+        for (j= 1 ; j<= nbColonnes; j++){
+    printf("Elément[%d][%d] : ",i,j);
+    scanf("%d",&matrice[i][j]);}
 }}
-int calcul (int maxi , int TPolynome[]){
-int i = 0 ;
-int c = 0 ;
-int x = 0;
-printf("donner la valeur %d ",x);
-scanf("%d",&x);
-for (i=1 ; i<= maxi ; i++){
-    c = TPolynome[i]*pow(x,i);
+void affichage (int nbLigne , int nbColonnes, int matrice[nbLigne][nbColonnes]){
+    int i,j= 0;
+    if (nbColonnes < 20 ){
+        for (i=1 ; i<= nbLigne ; i++){
+        for (j=1 ; j<= nbColonnes ; j++){
+            printf ("%7d",matrice [i][j]);
+            printf("\n");
+        }}
+    else { printf("idk");}}
 }
-return c ;}
-void derivee(int maxi , int TPolynome[]){
-int i = 0 ;
-int j = 0;
-for (i=1; i<= maxi ; i++){
-    for (j=0 ; j<= maxi ; j++){
-       (TPolynome[j]= TPolynome[i]) ;
-    }
-}}
-void produit (int maxi,int TPolynome1[], int TPolynome2[]){
-int i = 0;
-int TPolynome3[maxi];
-for (i=0 ; i<= maxi ; i++){
-  TPolynome3[i] = (TPolynome1[i]*TPolynome2[i]);
-}}
-void somme ( int maxi,int TPolynome1[], int TPolynome2[]){
-int i = 0;
-int TPolynome3[maxi] ;
-for (i=0 ; i<= maxi ;i++){
-     TPolynome3[i] = (TPolynome1[i]+TPolynome2[i]) ;
-     printf ("\n %d", TPolynome3[i]);}}
+void zéroo (int nbLigne , int matrice){
+int i,j = 0 ;
+for (i=1; i<= nbLigne; i++){
+        for (j=1 ;j<= i ; j++){
+    matrice[i][j]= 0 ;}}}
+void transposé(int matrice , int nbLigne, int nbColonnes){
+int i,j = 0 ;
+int B[50][50];
+ /* Affectation de la matrice transposée à B */
+ for (i=0; i<nbLigne; i++)
+     for (j=0; j<nbColonnes ; j++)
+          B[j][i]=matrice[i][j];
+ /* Affectation de la matrice transposée à B */
+ for (i=0; i<nbLigne; i++)
+     for (j=0; j<nbColonnes; j++)
+          B[j][i]=matrice[i][j];
+  /* Edition du résultat */
+ /* Attention: maintenant le rôle de nbLigne et nbcolonnes est inversé. */
+  printf("Matrice résultat :\n");
+ for (i=0; i<nbColonnes; i++){
+     for (j=0; j<nbLigne; j++)
+     printf("%7d", B[i][j]);
+     printf("\n");}
 int main(){
- int maxi = 3;
-int TPolynome [maxi];
-int TPolynomeA[maxi];
-int TPolynomeB[maxi];
-saisitab(maxi , TPolynomeA);
-saisitab(maxi , TPolynomeB);
-somme(maxi , TPolynomeA, TPolynomeB);
-affichageTab(maxi ,TPolynomeA);
-affichageTab(maxi , TPolynomeB);
-derivee(maxi ,TPolynomeA);
-derivee(maxi ,TPolynomeB);
-somme(maxi, TPolynomeA , TPolynomeB);
-produit(maxi, TPolynomeA , TPolynomeB);
+//int maxi = 50 ;
+int matrice[50][50];
 return 0;
 }
