@@ -1,0 +1,99 @@
+ a)	La matrice transposée sera mémorisée dans une deuxième matrice B qui sera ensuite affichée.
+
+#include <stdio.h>
+main()
+{
+ /* Déclarations */
+ int A[50][50];  /* matrice initiale */
+ int B[50][50];  /* matrice résultat */
+ int N, M;       /* dimensions des matrices */
+ int I, J;       /* indices courants */
+
+ /* Saisie des données */
+ printf("Nombre de lignes   (max.50) : ");
+ scanf("%d", &N );
+ printf("Nombre de colonnes (max.50) : ");
+ scanf("%d", &M );
+ for (I=0; I<N; I++)
+    for (J=0; J<M; J++)
+        {
+         printf("Elément[%d][%d] : ",I,J);
+         scanf("%d", &A[I][J]);
+        }
+ /* Affichage de la matrice */
+ printf("Matrice donnée :\n");
+ for (I=0; I<N; I++)
+    {
+     for (J=0; J<M; J++)
+          printf("%7d", A[I][J]);
+     printf("\n");
+    }
+ /* Affectation de la matrice transposée à B */
+ for (I=0; I<N; I++)
+     for (J=0; J<M; J++)
+          B[J][I]=A[I][J];
+  /* Edition du résultat */
+ /* Attention: maintenant le rôle de N et M est inversé. */
+  printf("Matrice résultat :\n");
+ for (I=0; I<M; I++)
+    {
+     for (J=0; J<N; J++)
+          printf("%7d", B[I][J]);
+     printf("\n");
+    }
+ return 0;
+} 
+
+b)	La matrice A sera transposée par permutation des éléments.
+
+#include <stdio.h>
+main()
+{
+ /* Déclarations */
+ int A[50][50];  /* matrice donnée           */
+ int N, M;       /* dimensions de la matrice */
+ int I, J;       /* indices courants         */
+ int AIDE;       /* pour la permutation      */
+ int DMAX;       /* la plus grande des deux dimensions */
+
+ /* Saisie des données */
+ printf("Nombre de lignes   (max.50) : ");
+ scanf("%d", &N );
+ printf("Nombre de colonnes (max.50) : ");
+ scanf("%d", &M );
+ for (I=0; I<N; I++)
+    for (J=0; J<M; J++)
+        {
+         printf("Elément[%d][%d] : ",I,J);
+         scanf("%d", &A[I][J]);
+        }
+ /* Affichage de la matrice */
+ printf("Matrice donnée :\n");
+ for (I=0; I<N; I++)
+    {
+     for (J=0; J<M; J++)
+          printf("%7d", A[I][J]);
+     printf("\n");
+    }
+ /* Transposition de la matrice A par permutation des   */
+ /* éléments [I][J] à gauche de la diagonale principale */
+ /* avec les éléments [J][I] à droite de la diagonale.  */
+ DMAX = (N>M) ? N : M;
+ for (I=0; I<DMAX; I++)
+     for (J=0; J<I; J++)
+         {
+          AIDE = A[I][J];
+          A[I][J] = A[J][I];
+          A[J][I] = AIDE;
+         }
+  /* Edition du résultat */
+ /* Attention: maintenant le rôle de N et M est inversé. */
+  printf("Matrice résultat :\n");
+ for (I=0; I<M; I++)
+    {
+     for (J=0; J<N; J++)
+          printf("%7d", A[I][J]);
+     printf("\n");
+    }
+ return 0;
+}
