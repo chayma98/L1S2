@@ -1,0 +1,123 @@
+ 1 class Fraction(object):
+  2     def __init__(self, numerateur, denominateur=1):
+  3         self.num = numerateur
+  4         self.denom = denominateur
+  5 
+  6 #== zone de test ci-dessous ===
+  7 
+  8 if __name__ == "__main__":
+  9     a = Fraction(1, 2)
+ 10     b = Fraction(3)
+ 11     print a.num, a.denom
+ 12     print b.num, b.denom
+ 13     print a
+ 14     print b
+ 16 #== zone de test ci-dessous ===
+ 17 
+ 18 if __name__ == "__main__":
+ 19     a = Fraction(1, 2)
+ 20     b = Fraction(3, 1)
+ 21     assert str(a) == "(1/2)"
+ 22     assert str(b) == "(3)"
+ 23     assert str(a*b) == "(3/2)"
+ 24     c = Fraction(1, 3)
+ 25     print b*c
+   1 def gcd(a, b):
+  2     '''gcd retourne le plus grand commun diviseur (greatest common divisor) 
+  3         de 2 nombres donnés.'''
+  4     while b:
+  5         a, b = b, a%b
+  6     return a
+  7 
+  8 class Fraction(object):
+  9     def __init__(self, numerateur, denominateur=1):
+ 10         num, denom = self.simplifier(numerateur, denominateur)
+ 11         self.num = num
+ 12         self.denom = denom
+ 13         
+ 14     def __str__(self):
+ 15         if self.denom == 1:
+ 16             return "(%s)"%self.num
+ 17         return "(%s/%s)"%(self.num, self.denom)
+ 18 
+ 19     def __mul__(self, autre):
+ 20         num = self.num * autre.num
+ 21         denom = self.denom * autre.denom
+ 22         num, denom = self.simplifier(num, denom)
+ 23         return Fraction(num, denom)
+ 24 
+ 25     def simplifier(self, a, b):
+ 26         '''divise deux entiers par leur facteur commun.'''
+ 27         facteur_commun = gcd(a, b)
+ 28         a /= facteur_commun
+ 29         b /= facteur_commun
+ 30         return a, b
+ 31 
+ 32 #== zone de test ci-dessous ===
+ 33 
+ 34 if __name__ == "__main__":
+ 35     a = Fraction(1, 2)
+ 36     b = Fraction(3, 1)
+ 37     assert str(a) == "(1/2)"
+ 38     assert str(b) == "(3)"
+ 39     assert str(a*b) == "(3/2)"
+ 40     c = Fraction(1, 3)
+ 41     assert str(b*c) == "(1)"
+ 42     d = Fraction(5, 10)
+ 43     assert str(d) == "(1/2)"
+   8 class Fraction(object):
+  9     def __init__(self, numerateur, denominateur=1):
+ 10         num, denom = self.simplifier(numerateur, denominateur)
+ 11         self.num = num
+ 12         self.denom = denom
+
+ 24     def __div__(self, autre):
+ 25         num = self.num * autre.denom
+ 26         denom = self.denom * autre.num
+ 27         return Fraction(num, denom)
+
+ 38 if __name__ == "__main__":
+ 39     a = Fraction(1, 2)
+ 40     b = Fraction(3, 1)
+ 41     assert str(a) == "(1/2)"
+
+ 42     assert str(b) == "(3)"
+ 43     assert str(a*b) == "(3/2)"
+
+ 44     c = Fraction(1, 3)
+ 45     assert str(b*c) == "(1)"
+
+ 46     d = Fraction(5, 10)
+ 47     assert str(d) == "(1/2)"
+
+ 48     print a/b
+ 49     print a/a
+  38 if __name__ == "__main__":
+ 39     a = Fraction(1, 2)
+ 40     b = Fraction(3, 1)
+ 41     assert str(a) == "(1/2)"
+
+ 42     assert str(b) == "(3)"
+ 43     assert str(a*b) == "(3/2)"
+
+ 44     c = Fraction(1, 3)
+ 45     assert str(b*c) == "(1)"
+
+ 46     d = Fraction(5, 10)
+ 47     assert str(d) == "(1/2)"
+
+ 48     assert str(a/b) == "(1/6)"
+ 49     assert str(a/a) == "(1)"
+
+ 50     assert str(a+a) == "(1)"
+ 51     assert str(b+b) == "(6)"
+
+ 52     assert str(a+b) == "(7/2)"
+ 53     assert str(c+c) == "(2/3)"
+
+Et voici l'ajout nécessaire à la classe Fraction :
+
+ 29     def __add__(self, other):
+ 30         denom = self.denom * other.denom
+ 31         num = self.num*other.denom + self.denom*other.num
+ 32         return Fraction(num, d
