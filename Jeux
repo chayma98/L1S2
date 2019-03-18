@@ -1,0 +1,273 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef TGeneration[50][50];
+
+void saisir_premiere_generation(TGeneration generation, int *nbLignes, int *nbColonnes, int *n)
+{
+    int i, j;
+    printf("/!\\ Debut de la saisie de la generation :\n");
+    printf("\tNombres de lignes : ");
+    scanf("%d", nbLignes);
+    printf("\tNombres de colonnes : ");
+    scanf("%d", nbColonnes);
+    printf("\n[*]------------------------[*]\n\n");
+    for(i=0; i<*nbLignes; i++)
+    {
+        for(j=0; j<*nbColonnes; j++)
+        {
+            printf("      generation[%d,%d] : ", i, j);
+            scanf("%d", &generation[i][j]);
+        }
+        printf("\n");
+    }
+    printf("[*]--- Fin de la saisie ---[*]\n\n");
+    *n= *n + 1;
+}
+
+void afficher_generation(TGeneration generation, int nbLignes, int nbColonnes, int n)
+{
+    int i, j;
+    printf("\nLa %de generation est : \n", n);
+    for(i=0; i<nbLignes; i++)
+    {
+        for(j=0; j<nbColonnes; j++)
+        {
+            printf("%d ", generation[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int haut(TGeneration g, int i, int j)
+{
+    if(g[i-1][j]){
+        return 1;
+    }
+    return 0;
+}
+
+int droite(TGeneration g, int i, int j)
+{
+    if(g[i][j+1]){
+        return 1;
+    }
+    return 0;
+}
+
+int bas(TGeneration g, int i, int j)
+{
+    if(g[i+1][j]){
+        return 1;
+    }
+    return 0;
+}
+
+int gauche(TGeneration g, int i, int j)
+{
+    if(g[i][j-1]){
+        return 1;
+    }
+    return 0;
+}
+
+int hautD(TGeneration g, int i, int j)
+{
+    if(g[i-1][j+1]){
+        return 1;
+    }
+    return 0;
+}
+
+int basD(TGeneration g, int i, int j)
+{
+    if(g[i+1][j+1]){
+        return 1;
+    }
+    return 0;
+}
+
+int basG(TGeneration g, int i, int j)
+{
+    if(g[i+1][j-1]){
+        return 1;
+    }
+    return 0;
+}
+
+int hautG(TGeneration g, int i, int j)
+{
+    if(g[i-1][j-1]){
+        return 1;
+    }
+    return 0;
+}
+
+int casesAutour(TGeneration generation, int i, int j, int nbLignes, int nbColonnes)
+{
+    int c = 0;
+
+    if(i == 0 && j == 0){ //haut gauche
+        if(droite(generation, i, j))
+        {
+            c++;
+        }
+        if(basD(generation, i, j))
+        {
+            c++;
+        }
+        if(bas(generation, i, j))
+        {
+            c++;
+        }
+    }
+    else if(i == 0 && j == nbColonnes) //haut droite
+    {
+        if(gauche(generation, i, j))
+        {
+            c++;
+        }
+        if(bas(generation, i, j))
+        {
+            c++;
+        }
+        if(basG(generation, i, j))
+        {
+            c++;
+        }
+    }
+    else if(i == nbLignes && j == 0) //bas gauche
+    {
+        if(haut(generation, i, j))
+        {
+            c++;
+        }
+        if(droite(generation, i, j))
+        {
+            c++;
+        }
+        if(hautD(generation, i, j))
+        {
+            c++;
+        }
+    }
+    else if(i == nbLignes && j == nbColonnes) //bas droite
+    {
+        if(gauche(generation, i, j))
+        {
+            c++;
+        }
+        if(haut(generation, i, j))
+        {
+            c++;
+        }
+        if(hautG(generation, i, j))
+        {
+            c++;
+        }
+    }
+    else if(i == 0 && (j > 0 && j < nbColonnes)) //haut
+    {
+        if(gauche(generation, i, j))
+        {
+            c++;
+        }
+        if(droite(generation, i, j))
+        {
+            c++;
+        }
+        if(bas(generation, i, j))
+        {
+            c++;
+        }
+        if(basG(generation, i, j))
+        {
+            c++;
+        }
+        if(basD(generation, i, j))
+        {
+            c++;
+        }
+    }
+    else if((i > 0 && i < nbLignes) && j == nbColonnes) //Droite
+    {
+        if(gauche(generation, i, j))
+        {
+            c++;
+        }
+        if(haut(generation, i, j))
+        {
+            c++;
+        }
+        if(bas(generation, i, j))
+        {
+            c++;
+        }
+        if(basG(generation, i, j))
+        {
+            c++;
+        }
+        if(hautG(generation, i, j))
+        {
+            c++;
+        }
+
+    }
+    else if(i == nbLignes && (j > 0 && j < nbColonnes)) //Bas
+    {
+        if(droite(generation, i, j))
+        {
+            c++;
+        }
+        if(gauche(generation, i, j))
+        {
+            c++;
+        }
+        if(haut(generation, i, j))
+        {
+            c++;
+        }
+        if(hautG(generation, i, j))
+        {
+            c++;
+        }
+        if(hautD(generation, i, j))
+        {
+            c++;
+        }
+    }
+    else if((i > 0 && i < nbLignes) && j == 0) //Gauche
+    {
+        if(haut(generation, i, j))
+        {
+            c++;
+        }
+        if(bas(generation, i, j))
+        {
+            c++;
+        }
+        if(droite(generation, i, j))
+        {
+            c++;
+        }
+        if(hautD(generation, i, j))
+        {
+            c++;
+        }
+        if(basD(generation, i, j))
+        {
+            c++;
+        }
+
+    }
+    else//centre
+    {
+        if(haut(generation, i, j))
+        {
+            c++;
+        }
+        if(hautD(generation, i, j))
+        {
+            c++;
+        }
+          if(droite(gen
