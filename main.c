@@ -1,110 +1,155 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-void saisitab (int maxi, int TPolynome[]){
-int i =0 ;
-int c =0;
-for (i=0 ; i<= maxi ; i++) {
-    printf("donner le coefiicient de la puissance %d ",i);
-    scanf("%d",&c);
-        TPolynome[i]= c ;
-}}
-void affichageTab (int maxi , int TPolynome[]){
-    int i = 0 ;
-    for (i=0;i<=maxi ; i++){
-           printf("\n %d\n",TPolynome[i]);
-}}
-int calcul (int maxi , int TPolynome[]){
-int i = 0 ;
-int c = 0 ;
-int x = 0;
-printf("donner la valeur %d ",x);
-scanf("%d",&x);
-for (i=1 ; i<= maxi ; i++){
-    c = TPolynome[i]*pow(x,i);
-}
-return c ;}
-int derivee (int p,int TPolynomeA[], int TPolynomeB[])
-  {
-  int i= 0;
+#include <time.h>
 
-    if (p==-1)
-      return -1;
-    for (i=p;i>=1;i--)
-      TPolynomeA[i-1]=i*TPolynomeB[i];
-    return p-1;
-  }
-void produit (int maxi,int TPolynome1[], int TPolynome2[]){
-int i,j = 0;
-int TPolynome3[maxi];
-for (i=1 ; i<= maxi ; i++){
-        for (j=1;j<=i;j++){
-  TPolynome3[i] = (TPolynome1[i]*TPolynome2[j]);
-}}}
-void somme ( int maxi,int TPolynome1[], int TPolynome2[]){
-int i = 0;
-int TPolynome3[maxi] ;
-for (i=1 ; i<= maxi ;i++){
-     TPolynome3[i] = (TPolynome1[i]+TPolynome2[i]) ;
-     printf ("\n %d \n ", TPolynome3[i]);}}
-int affichageMenu()
-{int choixMenu ;
-     printf("---Menu---\n\n");
-     printf("1.saisitab\n");
-     printf("2.somme\n");
-     printf("3.produit\n");
-     printf("4.derivee\n");
-     printf("3.affichageTab\n");
-     printf("\nVotre choix?\n\n");
-     scanf("%d", &choixMenu);
-     return choixMenu ;
-}
-int choixpol () {
-    int choixpol;
-printf("1.polynome1 \n");
-printf("2.polynome2 \n ");
-scanf("%d", &choixpol);
-     return choixpol ;
-}
-int main(){
- int maximum = 3 ;
- int TPolynome [maximum];
-int TPolynomeA[maximum];
-int TPolynomeB[maximum];
-int maxi = 0 ;
-printf ("donner le plus haut degré du polynome %d",maxi);
-scanf("%d",&maxi);
-saisitab( maxi,TPolynome[maxi]);
-    switch (affichageMenu()) /* pourquoi choixMenu ca n'esxiste que dans la fonction affichageMenu */
-    {
-    case 1:
-        printf("Vous avez choisis le saisitab!\n");
-        switch (choixpol()){
-            case 1 :
-        saisitab(maxi , TPolynomeA); break ;
-            case 2 : printf("\n"); saisitab(maxi , TPolynomeB); break ; }
-        break;
-    case 2:
-        printf("Vous avez choisis la somme!");somme(maxi , TPolynomeA, TPolynomeB);
-        break;
-    case 3:
-        printf("Vous avez choisis le produit!");
-        break;
-    case 4:
-        printf("Vous avez choisi le derivé!");derivee(maxi ,TPolynomeA,TPolynomeB);
-derivee(maxi ,TPolynomeA,TPolynomeB);
-    case 5:
-        printf ("vous avez choisi d'afficher le tab");switch (choixpol()){
-            case 1 :
-                affichageTab(maxi ,TPolynomeA);break ;
-            case 2 :  affichageTab(maxi , TPolynomeB); break ; }
-        break;
-    default:
-        printf("Vous ne ferez rien du tout!");
-        break;
+// Question 1
+typedef TGeneration[51][51];
+
+// Question 2
+
+void Reset (TGeneration G){
+
+    int i;
+    int j;
+    for ( i = 0 ; i < 51 ; i++){
+        for ( j = 0 ; j < 51 ; j++){
+            G[i][j] = 0;
+        }
     }
 
-    system("PAUSE");
+}
 
-return 0;
+
+int Saisie_Generation()
+{
+    int GeneIni;
+    printf("Saisir le nombre de la premiere generation : ");
+    scanf("%d",&GeneIni);
+    return GeneIni;
+}
+
+void GenAlea (TGeneration G , int GeneIni)
+{
+    int i; int j; int k;
+    for (k=0 ; k<GeneIni ; k++)
+    {
+        i = rand()%50; /* randomisation de 0 à 49 */
+        j = rand()%50; /* randomisation de 0 à 49 */
+        if (G[i+1][j+1]==1)
+        {
+            k--;
+        }
+        else
+            G[i+1][j+1] = 1;
+    }
+}
+
+
+// Question 3
+
+int Affichage_Generation (TGeneration G)
+{
+    int i ; int j;
+    for (i=0 ; i< 50 ; i++)
+    {
+        for (j=0 ; j<50 ; j++)
+        {
+            if ( G[i+1][j+1] == 0)
+                printf("  ");
+            else
+                printf("0 ");
+        }
+        printf("|\n|");
+    }
+}
+
+int Verification (TGeneration G , int i , int j)
+{
+    int k = 0; int p; int q;
+
+    for (p=i-1 ; p < i+1 ; p++)
+    {
+        for (q=j-1 ; q < j+1 ; q++)
+        {
+            if (p!=i && q!=j && (G[p][q] == 1))
+                {
+                    k+=1;
+                }
+        }
+    }
+    return k;
+}
+
+int Regles (int valeur, int k)
+{
+    int s;
+    s=0;
+    if (valeur==0 && k==3)
+        s=1;
+    if (valeur==1)
+
+    if ( (k==2) || (k==3)){  // CA MARCHE POOOO #FaireChierLaProf <3
+        printf("debug");
+        s=1;}
+    else
+        s=0;
+    return s;
+}
+
+void GeneAnneeSup (TGeneration G, TGeneration Gp )
+{
+    int i ; int j;
+    for (i=1 ; i<51 ; i++)
+    {
+        for (j=1 ; 1<51 ; j++)
+            Gp[i][j] = Regles (G[i][j],Verification(G, i, j));
+
+    }
+}
+
+void Rearange (TGeneration G, TGeneration Gp)
+{
+    int i; int j;
+    for (i=1 ; i<51 ; i++)
+    {
+        for (j=1 ; j<51 ; j++)
+            G[i][j]=Gp[i][j];
+    }
+}
+
+// Question 4
+/*
+int Calcule_Gene (Tgeneration G)
+{
+    int i; int j;
+    for (i=0 ; i<50 ; i++)
+    {
+        for (j=0 ; j<50 ; j++)
+        {
+            // regle A
+            if
+        }
+    }
+}
+
+
+
+
+
+
+
+*/
+int main()
+{
+   TGeneration G; TGeneration Gp; int GeneIni; int i;
+   GeneIni = Saisie_Generation(G);
+   Reset(G);
+   GenAlea(G, GeneIni);
+   Affichage_Generation(G);
+   for (i=0 ; i<1500 ; i++)
+   {
+       GeneAnneeSup( G, Gp);
+       Rearange(G, Gp);
+       Affichage_Generation(G);
+   }
 }
